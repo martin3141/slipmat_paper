@@ -45,6 +45,12 @@ for (n in 1:length(subj_vec)) {
   mask[1, 1] <- mask[1, 8] <- mask[8, 1] <- mask[8, 8] <- TRUE
   mrs_data_cropped <- mrs_data_cropped |> mask_xy_mat(mask)
   
+  # plot the grid and save as an image
+  grid_path <- file.path(output_folder, "no_rats_grid.tiff")
+  agg_tiff(grid_path, width = 1000, height = 1025, scaling = 1.5)
+  mrs_data_cropped |> zf() |> gridplot(xlim = c(4, 0.5))
+  dev.off()
+  
   mrs_data_pre_proc <- mrs_data_cropped |> zf() |> crop_spec(c(4, 0.2)) |>
                        bc_als(lambda = 1e3)
   

@@ -18,24 +18,26 @@ id_table <- data.frame(subj, run, tissue)
 
 all_mrs <- read_mrs(paths)
 
+# all_mrs |> append_dyns() |> peak_info() |> (\(x) x$fwhm_ppm)() |> max()
+
 mean_spec <- all_mrs |> mean_mrs_list() # |> hsvd_filt()
 
 rats_corr <- all_mrs |> rats(ref = mean_spec)
 
-proc_spec <-
-  rats_corr                     |> 
-  bc_constant(xlim = c(0, -1))  |>
-  set_lw(0.06)                  |>
-  zf()                          |>
-  crop_spec(c(4, 0.2))          |>
-  bc_als(lambda = 1e3)          |>
-  scale_spec()
+# find the broadest lw
+lws <- rats_corr |> bc_constant(xlim = c(0, -1)) |> append_dyns() |> 
+       peak_info() |> (\(x) x$fwhm_ppm)() |> max()
+# round-up
+max_lw <- ceiling(lws * 1000) / 1000
 
-pdf("test.pdf")
-mean_spec |> plot()
-all_mrs |> stackplot(xlim = c(4, 0.5))
-proc_spec |> stackplot(xlim = c(4, 0.5))
-dev.off()
+proc_spec <-
+  rats_corr                        |> 
+  bc_constant(xlim = c(0, -1))     |>
+  set_lw(max_lw)                   |> 
+  zf()                             |>
+  crop_spec(c(4, 0.2))             |>
+  bc_als(lambda = 1e3)             |>
+  scale_spec()
 
 proc_mat <- proc_spec |> mrs_data2mat() |> Re()
 

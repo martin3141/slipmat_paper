@@ -22,11 +22,17 @@ mean_spec <- all_mrs |> mean_mrs_list()
 
 rats_corr <- all_mrs |> rats(ref = mean_spec, ret_corr_only = TRUE)
 
+# find the broadest lw
+lws <- rats_corr |> bc_constant(xlim = c(0, -1)) |> append_dyns() |> 
+       peak_info() |> (\(x) x$fwhm_ppm)() |> max()
+# round-up
+max_lw <- ceiling(lws * 1000) / 1000
+
 # Second phase of SLIPMAT
 proc_spec <-
   rats_corr                     |> 
   bc_constant(xlim = c(0, -1))  |>
-  set_lw(0.06)                  |>
+  set_lw(max_lw)                |>
   zf()                          |>
   crop_spec(c(4, 0.2))          |>
   bc_als(lambda = 1e3)          |>
@@ -105,15 +111,35 @@ F_vals_gm_spec <- F_vals_gm |> vec2mrs_data(fs = fs(proc_spec[[1]]),
                                             ref = proc_spec[[1]]$ref,
                                             fd = TRUE)
 
-p1 <- ~plot(F_vals_wm_spec, y_scale = TRUE, yaxis_lab = "F-statistic",
-            xlim = c(4, 0.2))
+# p1 <- ~plot(F_vals_wm_spec, y_scale = TRUE, yaxis_lab = "F-statistic",
+#             xlim = c(4, 0.2))
 
-p2 <- ~plot(F_vals_gm_spec, y_scale = TRUE, yaxis_lab = "F-statistic",
-            xlim = c(4, 0.2))
+p1 <- function() {
+  plot(F_vals_wm_spec, y_scale = TRUE, yaxis_lab = "F-statistic",
+            xlim = c(4, 0.2), restore_def_par = FALSE)
+  abline(h = 9.6, lty = 2)
+  text(2.9, 210, "tCho")
+  text(3.6, 210, "sIns")
+  text(3.6, 40, "Ins")
+}
+
+p2 <- function() {
+  plot(F_vals_gm_spec, y_scale = TRUE, yaxis_lab = "F-statistic",
+       xlim = c(4, 0.2), restore_def_par = FALSE)
+  abline(h = 9.6, lty = 2)
+  text(2.9, 100, "tCho")
+  text(3.6, 60, "sIns")
+  text(3.6, 40, "Ins")
+  text(2.0, 55, "tNAA")
+}
 
 agg_tiff("fig_6.tiff", width = 1400, height = 800, scaling = 2)
 plot_grid(p1, p2, labels = c('A', 'B'), label_size = 14) |> print()
 dev.off()
+
+# F-value for Bonferroni Corrected statistical significance
+(1 - pf(9.6, 7, 16))*479
+
 
 # fs <- fs(F_vals_gm_spec)
 # N <- Npts(F_vals_gm_spec)

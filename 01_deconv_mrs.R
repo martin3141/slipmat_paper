@@ -129,4 +129,14 @@ for (n in 1:length(subj_vec)) {
   write_mrs(spec_full$wm, file.path(output_folder, "wm.nii.gz"), force = TRUE)
   write_mrs(spec_full$gm, file.path(output_folder, "gm.nii.gz"), force = TRUE)
   
+  wm_spec_path <- file.path(output_folder, "wm.tiff")
+  agg_tiff(wm_spec_path)
+  spec_full$wm |> zf() |> plot(xlim = c(4, 0.5))
+  dev.off()
+  
+  gm_spec_path <- file.path(output_folder, "gm.tiff")
+  agg_tiff(gm_spec_path)
+  spec_full$gm |> zf() |> plot(xlim = c(4, 0.5))
+  dev.off()
+  
 }
