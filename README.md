@@ -14,4 +14,4 @@ Note that FSL BET followed by FSL FAST must be run on each sub-??_T1w.nii.gz fil
 
 `bet sub-??_T1w.nii.gz T1_brain -B`
 
-`fast T1_brain -B`
+`fast T1_brain`
