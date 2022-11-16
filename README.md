@@ -10,7 +10,7 @@ https://doi.org/10.5281/zenodo.7189140
 
 Place these scripts in a folder at the root level of the BIDS data folder, eg same level as dataset_description.json.
 
-Note that FSL BET followed by FSL FAST must be run on each sub-??_T1w.nii.gz file for these scripts to work. Following commands were used:
+Note that FSL BET followed by FSL FAST must be run on each sub-??_T1w.nii.gz file for these scripts to work. Following commands were used for each T1 dataset:
 
 `bet sub-??_T1w.nii.gz T1_brain -B`
 
