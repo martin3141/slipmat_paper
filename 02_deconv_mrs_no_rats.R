@@ -37,13 +37,8 @@ for (n in 1:length(subj_vec)) {
   
   dir.create(output_folder, recursive = TRUE)
   
-  # extract the central 8x8 matrix of spectra
-  mrs_data_cropped <- mrs_data |> crop_xy(8, 8)
-  
-  # crop the corner voxels as they are close to the diagonal saturation bands
-  mask <- matrix(FALSE, 8, 8)
-  mask[1, 1] <- mask[1, 8] <- mask[8, 1] <- mask[8, 8] <- TRUE
-  mrs_data_cropped <- mrs_data_cropped |> mask_xy_mat(mask)
+  # extract the central 8x8 matrix of spectra and mask the corners
+  mrs_data_cropped <- mrs_data |> crop_xy(8, 8) |> mask_xy_corners()
   
   # plot the grid and save as an image
   grid_path <- file.path(output_folder, "no_rats_grid.tiff")
@@ -61,7 +56,10 @@ for (n in 1:length(subj_vec)) {
   
   mrs_data_pre_proc <- scale_res$mrs_data
   
-  # stackplot(mrs_data_pre_proc, xlim = c(4.2, 0.5))
+  stackplot_path <- file.path(output_folder, "no_rats_stackplot.tiff")
+  agg_tiff(stackplot_path, width = 1000, height = 800, scaling = 1.5)
+  mrs_data_pre_proc |> stackplot()
+  dev.off()
   
   # get the approximate MRSI excitation region
   mrsi_mask     <- get_mrsi_voi(mrs_data |> crop_xy(10, 10), seg_data)

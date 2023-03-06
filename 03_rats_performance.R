@@ -24,7 +24,7 @@ all_mrs_rats <- read_mrs(paths)
 #                 (\(x) x$fwhm_ppm)() |> max()
 
 # basic bl correction and scaling
-all_mrs_rats <- all_mrs_rats |>
+all_mrs_rats <- all_mrs_rats |> zf() |>
                 bc_constant(c(0, -1)) |> 
                 scale_spec(xlim = c(1.8, 2.2), operator = "max")
 
@@ -39,7 +39,7 @@ id_table_no_rats <- data.frame(subj, run, tissue)
 all_mrs_no_rats <- read_mrs(paths)
 
 # basic bl correction and scaling
-all_mrs_no_rats <- all_mrs_no_rats |>
+all_mrs_no_rats <- all_mrs_no_rats |> zf() |>
                    bc_constant(c(0, -1)) |> 
                    scale_spec(xlim = c(1.8, 2.2), operator = "max")
 
@@ -62,7 +62,7 @@ no_rats_gm_snr <- all_mrs_no_rats_gm |> append_dyns() |> calc_spec_snr()
 no_rats_wm_snr <- all_mrs_no_rats_wm |> append_dyns() |> calc_spec_snr()
 
 # plot typical improvement for gm/wm rats vs no rats
-eg_spec <- 22
+eg_spec <- 22 # subj 8, run 1
 
 p1 <- function() {
   plot(all_mrs_no_rats_gm[[eg_spec]] |> zf(), xlim = c(4, 0.2),
