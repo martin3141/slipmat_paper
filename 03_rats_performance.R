@@ -109,6 +109,14 @@ p4 <- function() {
   text(2.35, 0.50, expression(symbol("\255")*NAAG))
 }
 
+# Plotting code gives the following warning
+# 
+# Warning messages:
+#   1: In is.na(labels) :
+#   is.na() applied to non-(list or vector) of type 'expression'
+#
+# not sure why, but plots looks good and can be trusted
+
 agg_tiff("fig_3.tiff", width = 1200, height = 700, scaling = 2)
 plot_grid(p1, p2, p3, p4, labels = c('A', 'B', 'C', 'D'), label_size = 14) |>
   print()
