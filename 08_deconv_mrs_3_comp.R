@@ -165,18 +165,18 @@ for (n in 1:length(subj_vec)) {
   spec_full <- spec_decomp_3_comp(mrs_data_scaled, seg_res$seg_table$WM_rich,
                                 seg_res$seg_table$WM_edge, seg_res$seg_table$GM)
   
-  write_mrs(spec_full$wm_rich, file.path(output_folder, "wm_rich.nii.gz"),
+  write_mrs(spec_full$wm_rich, file.path(output_folder, "cwm.nii.gz"),
             force = TRUE)
-  write_mrs(spec_full$wm_edge, file.path(output_folder, "wm_edge.nii.gz"),
+  write_mrs(spec_full$wm_edge, file.path(output_folder, "pwm.nii.gz"),
             force = TRUE)
   write_mrs(spec_full$gm, file.path(output_folder, "gm.nii.gz"), force = TRUE)
   
-  wm_rich_spec_path <- file.path(output_folder, "wm_rich.tiff")
+  wm_rich_spec_path <- file.path(output_folder, "cwm.tiff")
   agg_tiff(wm_rich_spec_path)
   spec_full$wm_rich |> zf() |> plot(xlim = c(4, 0.5))
   dev.off()
   
-  wm_edge_spec_path <- file.path(output_folder, "wm_edge.tiff")
+  wm_edge_spec_path <- file.path(output_folder, "pwm.tiff")
   agg_tiff(wm_edge_spec_path)
   spec_full$wm_edge |> zf() |> plot(xlim = c(4, 0.5))
   dev.off()
