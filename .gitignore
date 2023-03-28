@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-deconv_results
+deconv_results*
+displace_results*
 deconv_results_no_rats
 .DS_store
 *.tiff
