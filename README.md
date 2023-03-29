@@ -6,7 +6,7 @@ https://www.biorxiv.org/content/10.1101/2022.11.15.516599v1
 
 Data available from:
 
-https://doi.org/10.5281/zenodo.7189140
+https://doi.org/10.5281/zenodo.7189139
 
 Place these scripts in a folder at the root level of the BIDS data folder, eg same level as dataset_description.json.
 
