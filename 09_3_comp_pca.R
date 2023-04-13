@@ -67,7 +67,7 @@ pc2 <- pca_res$rotation[,2] |> vec2mrs_data(fs = fs(proc_spec[[1]]),
 
 p2 <- ~plot(pc2, y_scale = TRUE, xlim = c(4, 0.2), bl_lty = 1)
 
-agg_tiff("fig_s2.tiff", width = 1200, height = 550, scaling = 2)
+agg_tiff("fig_8.tiff", width = 1200, height = 550, scaling = 2)
 plot_grid(p1, p2, labels = c('A', 'B'), label_size = 14) |> print()
 dev.off()
 

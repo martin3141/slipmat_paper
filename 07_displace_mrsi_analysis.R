@@ -164,6 +164,6 @@ p6 <- autoplot(pca_res_disp_15, data = id_table[c(TRUE, FALSE),],
                colour = 'subj', variance_percentage = FALSE,
                main = "15mm displacement")
 
-agg_tiff("fig_s1.tiff", width = 1400, height = 900, scaling = 2)
+agg_tiff("fig_7.tiff", width = 1400, height = 900, scaling = 2)
 plot_grid(p1, p2, p3, p4, p5, p6, rel_widths = c(1, 1, 1.25))
 dev.off()

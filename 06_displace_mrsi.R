@@ -39,10 +39,12 @@ for (m in 1:length(displace_vec)) {
     seg_data <- seg_path |> readNifti()
     
     # displace data in the A > P direction
-    mrs_data$affine[2, 4] <- mrs_data$affine[2, 4] + displace_subj[n] / (2 ^ 0.5)
+    mrs_data$affine[2, 4] <- mrs_data$affine[2, 4] +
+                             displace_subj[n] / (2 ^ 0.5)
     
     # displace data in the L > R direction
-    mrs_data$affine[1, 4] <- mrs_data$affine[1, 4] + displace_subj[n] / (2 ^ 0.5)
+    mrs_data$affine[1, 4] <- mrs_data$affine[1, 4] +
+                             displace_subj[n] / (2 ^ 0.5)
     
     # create an output folder
     output_folder <- paste0("displace_results_", displace_vec[m], "mm/",
