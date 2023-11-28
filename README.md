@@ -15,3 +15,14 @@ Note that FSL BET followed by FSL FAST must be run on each sub-??_T1w.nii.gz fil
 `bet sub-??_T1w.nii.gz T1_brain -B`
 
 `fast T1_brain`
+
+## Paper citation
+
+Olivia Vella, Andrew P. Bagshaw, Martin Wilson,
+SLIPMAT: A pipeline for extracting tissue-specific spectral profiles from 1H MR spectroscopic imaging data,
+NeuroImage,
+Volume 277,
+2023,
+120235,
+ISSN 1053-8119,
+https://doi.org/10.1016/j.neuroimage.2023.120235
